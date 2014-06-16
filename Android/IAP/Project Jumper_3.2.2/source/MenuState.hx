@@ -1,0 +1,472 @@
+package;
+
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.text.FlxText;
+import flixel.ui.FlxButton;
+import flixel.util.FlxStringUtil;
+import extension.iap.IAP;
+import extension.iap.IAPEvent;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import haxe.xml.Fast;
+//import model.GameUserData;
+//import ui.Store.StoreItemData;
+//import ui.StoreItemPill;
+//mport model.GameModel;
+/**
+ * ...
+ * @author David Bell
+ */
+class MenuState extends FlxState 
+{
+	// How many menu options there are.
+	public static inline var OPTIONS:Int = 3;
+	public static inline var TEXT_SPEED:Float = 600;
+	
+	// Augh, so many text objects. I should make arrays.
+	private var _text1:FlxText;
+	private var _text2:FlxText;
+	private var _text3:FlxText;
+	private var _text4:FlxText;
+	private var _text5:FlxText; 
+	
+	private var buton1:FlxButton;
+	private var buton2:FlxButton;
+	
+	private var _pointer:FlxSprite;
+	
+	// This will indicate what the pointer is pointing at
+	private var _option:Int;  
+	
+	
+	override public function create():Void 
+	{
+		
+		FlxG.mouse.visible = false;
+		FlxG.state.bgColor = 0xFF101414;
+		buton1 = new FlxButton(100, 100, "buy10coins", onbuton1);
+		add(buton1);
+		buton2 = new FlxButton(200, 200, "consume", onbuton2);
+		add(buton2);
+		// Each word is its own object so we can position them independantly
+		_text1 = new FlxText( -220, FlxG.height / 4, 320, "Project");
+		_text1.moves = true;
+		_text1.size = 40;
+		_text1.color = 0xFFFF00;
+		_text1.antialiasing = true;
+		_text1.velocity.x = TEXT_SPEED;
+		add(_text1);
+		
+		// Base everything off of text1, so if we change color or size, only have to change one
+		_text2 = new FlxText(FlxG.width - 50, FlxG.height / 2.5, 320, "Jumper");
+		_text2.moves = true;
+		_text2.size = _text1.size;
+		_text2.color = _text1.color;
+		_text2.antialiasing = _text1.antialiasing;
+		_text2.velocity.x = - TEXT_SPEED;
+		add(_text2);
+		
+		// Set up the menu options
+		_text3 = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3, 150, "Play");
+		_text4 = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3 + 30, 150, "Visit NIWID");
+		_text5 = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3 + 60, 150, "Visit flixel.org");
+		_text3.color = _text4.color = _text5.color = 0xAAFFFF00;
+		_text3.size = _text4.size = _text5.size = 16;
+		_text3.antialiasing = _text4.antialiasing = _text5.antialiasing = true;
+		add(_text3);
+		add(_text4);
+		add(_text5);
+		
+		_pointer = new FlxSprite();
+		_pointer.loadGraphic("assets/art/pointer.png");
+		_pointer.x = _text3.x - _pointer.width - 10;
+		add(_pointer);
+		_option = 0;
+		initializeIAP();
+		super.create();
+	}
+	
+	override public function update():Void 
+	{
+		if (FlxG.mouse.wheel != 0)
+		{
+			FlxG.camera.zoom += (FlxG.mouse.wheel / 10);
+		}
+		
+		// Stop the texts when they reach their designated position
+		if (_text1.x > FlxG.width / 5)	
+		{
+			_text1.velocity.x = 0;
+		}
+		
+		if (_text2.x < FlxG.width / 2.5) 
+		{
+			_text2.velocity.x = 0;
+		}
+		
+		// this is the goofus way to do it. An array would be way better
+		switch(_option)    
+		{
+			case 0:
+				_pointer.y = _text3.y;
+			case 1:
+				_pointer.y = _text4.y;
+			case 2:
+				_pointer.y = _text5.y;
+		}
+		
+		if (FlxG.keys.justPressed.UP)
+		{
+			// A goofy format, because % doesn't work on negative numbers
+			_option = (_option + OPTIONS - 1) % OPTIONS; 
+			FlxG.sound.play("assets/sounds/menu" + Reg.SoundExtension, 1, false);
+		}
+		
+		if (FlxG.keys.justPressed.DOWN)
+		{
+			_option = (_option + OPTIONS + 1) % OPTIONS;
+			FlxG.sound.play("assets/sounds/menu" + Reg.SoundExtension, 1, false);
+		}
+		
+		if (FlxG.keys.anyJustPressed(["SPACE", "ENTER", "C"]))
+		{
+			switch (_option) 
+			{
+				case 0:
+					FlxG.cameras.fade(0xff969867, 1, false, startGame);
+					FlxG.sound.play("assets/sounds/coin" + Reg.SoundExtension, 1, false);
+				case 1:
+					FlxG.openURL("http://chipacabra.blogspot.com");
+				case 2:
+					FlxG.openURL("http://flixel.org");
+			}
+		}
+		
+		super.update();
+	}
+	
+	private function startGame():Void
+	{
+		//FlxG.switchState(new PlayState());
+	}
+	
+	
+	public function onbuton1():Void
+	{
+		IAP.purchase("com.paala.100flixel11");
+	}
+	public function onbuton2():Void
+	{
+		//IAP.consume("com.paala.100flixel6");
+		IAP.queryInventory (true, null);
+	}
+	//IAP.
+	
+	
+	function initializeIAP() 
+	{
+		// Google License key: 
+		//TODO: Put in config or anywhere
+		#if android
+		//var licenseKey:String = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv2pAdZ0dPy0sr/75E7U4oSYzDLZ7/Vn8YcfR6SN7R60Ew6chHTzRDWxr2XKjgjs3DixwFgcd5YAEv4zWcQfZSSwrOdjycF/5TUAbbfESWAZgB9UDz0NLl5KXaf+HitTlyshAGq7zpsGA52nsu0B/5JF7Sau27Ul1tzTYBWqiOaOEzjfJJppYxbjjTde/wmsEJ2SjqvoSX0zVM3lxpGGNXkvsPBdK8uT8/WU9w5iD2gW0PNsVbPYP2ceF5Q+mPkCef5XNS+nj5nkFHO3oA2Da4Ep4UELg2iQ7uHN0vFcTTJ3KLovZHWLS6ID72OwzfLtpEO/rzT6nKslDfiWz8oU9jwIDAQAB";
+		//pt com.paala.testhaxe
+		var licenseKey:String="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw032vC+gDjKOKQEN1EQwrNCngWFWvQvIP/5RL8e3VBi+nvQ8NOW45Gv5gN/MUqTvqDZ5PywCsWMQibd46H8dHFi9uQDo1CtBnfkfqq6lYi4i1LMu6EDFWs7ksGJTMV/H6tq03H4ENJBXPMgjD7S4kM9SsybEEE7nzQe10QEAFDQmKKjnHF30pufCKcK0oKN2egdzb3P+pvBpRzw7OpIVV+oUcmaxytca1TsH7GWy9lm7KXRInuczyAXTxkoxVbuQto55Ef0j6Yh7FMgjrXU9uFpVu4JzoWPUN4ZobYx++P60SeuQhVTF8xIX0Csu9laK7o7wMfhb90dkoW7LDptPdwIDAQAB";
+		
+		//pt alta
+		//var licenseKey:String="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvaljj3iz4xVUYjeIJ9eWoXkgmyPitp4lsaytK9HD9DIkE+jkirpEAeI/BZD6YKAuUpy5B/DHs1Tx8lm4xfklaNuHPZ2YAC8RzkoWujcT1S4bt6WccT5imH8xlql//YLyW9MRSYtSSqfFVeygxEC9iHbm0+vWAOgVK0nHc/B9vYfijyStTY7o2XyJ03u9G7v40DPU/znVYh07+G96n9BGMWtyiULbqxSfjwPNbwrrpdWZ/VHY0SjBr/lNBov1YXzxCU5mMsPqcrUMPi8YF80nyT9ApU2p5IqnZ5SrNRV9DBg/Watm8rBtipVs/kbxLRYahIVlgo52YuwR4lfR2FKzewIDAQAB";
+		
+		#else
+		var licenseKey:String = "";
+		#end
+		
+		IAP.addEventListener(IAPEvent.PURCHASE_INIT, onPurchaseInit);
+		IAP.addEventListener(IAPEvent.PURCHASE_INIT_FAILED, onPurchaseInitFailed);
+		
+		IAP.addEventListener(IAPEvent.PURCHASE_SUCCESS, onPurchaseSuccess);
+		IAP.addEventListener(IAPEvent.PURCHASE_FAILURE, onPurchaseFail);
+		IAP.addEventListener(IAPEvent.PURCHASE_CANCEL, onPurchaseCancel);
+		
+		IAP.addEventListener(IAPEvent.PURCHASE_CONSUME_SUCCESS, onConsumeSuccess);
+		IAP.addEventListener(IAPEvent.PURCHASE_CONSUME_FAILURE, onConsumeFail);
+		
+		IAP.addEventListener(IAPEvent.PRODUCTS_RESTORED, onPurchasesRestored);
+		IAP.addEventListener(IAPEvent.PRODUCTS_RESTORED_WITH_ERRORS, onPurchasesRestoredWithErrors);
+		IAP.addEventListener(IAPEvent.PURCHASE_PRODUCT_DATA_COMPLETE, onStoreDataArrived);
+		IAP.addEventListener(IAPEvent.DOWNLOAD_START, onProductDownloadStart);
+		IAP.addEventListener(IAPEvent.DOWNLOAD_COMPLETE, onProductDownloadComplete);
+		IAP.addEventListener(IAPEvent.DOWNLOAD_PROGRESS, onProductDownloadProgress);
+		
+		IAP.addEventListener(IAPEvent.PURCHASE_QUERY_INVENTORY_COMPLETE, onQueryInventoryComplete);
+		IAP.addEventListener(IAPEvent.PURCHASE_QUERY_INVENTORY_FAILED, onQueryInventoryFailed);
+		
+		
+		IAP.initialize(licenseKey);
+		
+		trace("IAP: Available: " + IAP.available);
+	}
+	
+	private function onPurchaseInit(e:IAPEvent):Void 
+	{
+		trace(e.type);
+		getStoreDataFromIAP();
+	}
+	
+	private function onPurchaseInitFailed(e:Event):Void 
+	{
+		trace(e.type);
+		getStoreDataFromModel();
+	}
+	
+	private function onProductDownloadStart(e:IAPEvent):Void 
+	{
+		trace(e.type + " - " + e.productID + " - TR: " + e.transactionID); 
+	}
+	
+	private function onProductDownloadComplete(e:IAPEvent):Void 
+	{
+		trace(e.type + " - " + e.productID + " - TR: " + e.transactionID); 
+		trace("Path: " + e.downloadPath);
+		trace("Version: " + e.downloadVersion);
+	}
+	
+	private function onProductDownloadProgress(e:IAPEvent):Void 
+	{
+		trace(e.type + " - " + e.productID + " - TR: " + e.transactionID); 
+		trace("Path: " + e.downloadPath);
+		trace("Version: " + e.downloadVersion);
+		trace("Progress: " + e.downloadProgress);
+	}
+	
+	private function onStoreDataArrived(e:IAPEvent):Void 
+	{
+		trace("onStoreDataArrived");
+		
+		
+		if (IAP.inventory != null) {
+			trace("IAP.inventory: " + IAP.inventory);
+			trace("IAP.inventory.productDetailsMap: " + IAP.inventory.productDetailsMap);
+			trace("IAP.inventory.purchaseMap: " + IAP.inventory.purchaseMap);
+		}
+		
+		//setStoreData(e.productsData);
+	}
+	
+	private function onQueryInventoryComplete(e:IAPEvent):Void 
+	{
+		trace(e.type);
+		trace("Products Data: ");
+		var pr:IAProduct;
+		
+		if (e.productsData != null) {
+			trace("All products at once: " + e.productsData.length);
+			for (i in 0...e.productsData.length) {
+				pr = e.productsData[i];
+				trace("productID: " + pr.productID);
+				trace("localizedTitle: " + pr.localizedTitle);
+				trace("localizedDescription: " + pr.localizedDescription);
+				trace("price: " + pr.price);
+				trace("----");
+			}
+			
+			trace(".");
+		}
+		
+		trace(".");
+		
+		if (IAP.inventory != null) {
+			trace("IAP.inventory: " + IAP.inventory);
+			trace("IAP.inventory.productDetailsMap: " + IAP.inventory.productDetailsMap);
+			trace("IAP.inventory.purchaseMap: " + IAP.inventory.purchaseMap);
+			
+			if (IAP.inventory.purchaseMap.exists("com.paala.100flixel11")) {
+				IAP.consume(IAP.inventory.purchaseMap.get("com.paala.100flixel11"));
+				_text1.text = "din query";
+			}
+		}
+		
+		if (e.productsData.length > 0) {
+			//setStoreData(e.productsData);
+		} else {
+			trace("No productsData, calling model");
+			//getStoreDataFromModel();
+			
+		}
+		
+	}
+	
+	/*private function setStoreData(productsData:Array<IAProduct>):Void {
+		
+		//var model:GameModel = GameModel.getInstance();
+		var order:Array<String> = model.data.node.storeItems.att.order.split(",");
+		
+		
+		var map:Map<String, StoreItemData> = new Map<String, StoreItemData>();
+
+		var storeElems:Xml = model.data.node.storeItems.x;
+		
+		var fastEl:Fast;
+		var xmlEl:Xml;
+		for (elt in productsData) {
+			xmlEl = model.getXmlEl(storeElems, elt.productID);
+			
+			if (xmlEl != null) {
+				fastEl = new Fast(xmlEl);
+				map.set(elt.productID, {id:elt.productID, thumb:ScreenUtils.getBitmapData(fastEl.att.thumb), description:elt.localizedTitle + " " + elt.price, reward:(fastEl.has.reward)? Std.parseInt(fastEl.att.reward) : null} );
+			}
+			
+		}
+		
+		this.data = map;
+		var itmPill:StoreItemPill;
+		var datum:StoreItemData;
+		for (i in 0...order.length) {
+			datum = data.get(order[i]);
+			
+			itmPill = new StoreItemPill(datum.id, datum.thumb, datum.description);
+			itemsHolder.addChild(itmPill);
+			
+			itmPill.x = i * (ScreenUtils.scaleFloat(5) + itmPill.width);
+			itemsHolder.addChild(itmPill);
+			
+			itmPill.addEventListener(MouseEvent.CLICK, onItemSelected);
+		}
+		
+	}*/
+	
+	private function onQueryInventoryFailed(e:IAPEvent):Void
+	{
+		trace(e.type);
+		getStoreDataFromModel();
+	}
+	
+	private function onPurchaseSuccess(e:IAPEvent):Void 
+	{
+		trace(e.type + " - productID: " + e.productID);
+		_text1.text = "purchase success";
+		//here you should make code for purchase success
+		IAP.consume(e.purchase);
+		if (e.productID == "com.paala.100flixel11")
+		{
+			_text1.text = " CU IFpurchase success";
+		}
+		
+		/*if (data.exists(e.productID)) {
+			var prod:StoreItemData = data.get(e.productID);
+			// If the item has a reward it means that it's consumable
+			if (prod.reward != null) {
+				
+				#if android
+				//test
+				
+				//trace("sending test consume for " + e.purchase + " - payload: " + e.purchase.developerPayload);
+				IAP.consume(e.purchase);
+				
+				#else
+				
+				onConsumeSuccess(e);
+				
+				#end
+				
+			}
+			
+		}*/
+		
+	}
+	
+	private function onPurchaseFail(e:IAPEvent):Void 
+	{
+		trace(e.type + " - productID: " + e.productID + " - message: " + e.message);
+	}
+	
+	private function onPurchaseCancel(e:IAPEvent):Void 
+	{
+		trace(e.type + " - productID: " + e.productID);
+	}
+	
+	private function onConsumeSuccess(e:IAPEvent):Void 
+	{
+		trace(IAPEvent.PURCHASE_CONSUME_SUCCESS + " - productID: " + e.productID);
+		
+		/*if (data.exists(e.productID)) {
+			var prod:StoreItemData = data.get(e.productID);
+			// If the item has a reward it means that it's consumable
+			if (prod.reward != null) {
+				//GameUserData.getInstance().gold += prod.reward;
+				
+				// Locally erase the product from the inventory
+				IAP.inventory.erasePurchase(e.productID);
+			}
+		}*/
+		
+	}
+	
+	private function onConsumeFail(e:IAPEvent):Void 
+	{
+		trace(e.type + " - productID: " + e.productID + " - message: " + e.message);
+	}
+	
+	private function onPurchasesRestored(e:IAPEvent):Void 
+	{
+		trace(e.type);
+	}
+	
+	private function onPurchasesRestoredWithErrors(e:IAPEvent):Void 
+	{
+		trace(e.type);
+	}
+	
+	private function getStoreDataFromIAP() :Void {
+		trace("getStoreDataFromIAP");
+		
+		//var orderArr:Array<String> = GameModel.getInstance().data.node.storeItems.att.order.split(",");
+		#if ios
+		IAP.requestProductData (orderArr);
+		#elseif android
+		
+		IAP.queryInventory (true, null);
+		#end
+	}
+	
+	private function getStoreDataFromModel():Void {
+		trace("getStoreDataFromModel");
+		
+		/*var productsArray:Array<IAProduct> = [];
+		
+		var model:GameModel = GameModel.getInstance();
+		
+		var fastEl:Fast;
+		
+		for (fastEl in model.data.node.storeItems.elements) {
+			
+			productsArray.push( { productID: fastEl.att.id, localizedTitle: fastEl.att.title, price: fastEl.att.price } );
+			
+		}
+		
+		setStoreData(productsArray);*/
+		
+	}
+	
+	function testPurchase_NoIAP(productID:String) 
+	{
+		trace("PURCHASE WITHOUT IAP - productID: " + productID);
+		//var prod:StoreItemData = data.get(productID);
+		//if (prod.reward != null) //GameUserData.getInstance().gold += prod.reward;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,11 @@
+{
+	"name": "inthebox-macros",
+	"url" : "https://github.com/shoebox/inthebox-macros",
+	"license": "BSD",
+	"tags": ["hyperfiction", "macro","shoebox","openfl"],
+	"description": "Essential macros for native extensions",
+	"classPath":"src/",
+	"version": "1.0.4",
+	"releasenote": "The library is now usable as a haxelib (missing 'classPath' node)",
+	"contributors": ["shoebox"]  
+}

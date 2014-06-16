@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension>
+
+	<!-- misc -->
+		<classpath name="src" />
+
+	<section unless="display">
+
+		<!-- ndll -->
+			<ndll name="HypPlayServices" if="android"/>
+
+		<!-- Dependencies -->
+			<dependency name="google-play-services" path="dependencies/google-play-services" if="android" />
+			<dependency name="hyp-play-services" path="dependencies/hyp-play-services" if="android" />
+
+		<!-- Android Extension -->
+			<android extension="fr.hyperfiction.googleplayservices.HypPlayServices" />
+
+	</section>
+
+</extension>

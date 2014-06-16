@@ -1,0 +1,68 @@
+1.2
+
+- com.paala.testhaxe.
+trebuie pus un apk in https://play.google.com/apps/publish cu icon
+care il cauta in: /assets/images/logo/haxeflixel.svg
+
+set in app products, wait 2-3 hours
+
+
+NUUU
+
+google a modificat setarile si trebuie ca :
+
+1. in https://play.google.com/apps/publish/ sa ai apk uploadat in beta sau alpha nimic in productie.
+Apoi completezi tot ca sa poti sa dai publish to play store.
+dai test account la grupul tau de testare cu email:
+
+mihaimorosanu@googlegroups.com
+
+
+acolo gasesti un link gen:
+
+https://play.google.com/apps/testing/com.paala.testhaxe
+
+trebuie sa loghezi ca test user mihaimoro@gmail.com
+
+intri pe pagina si opt in.
+
+apoi ar trebui sa mearga test IAP din device
+
+
+the version of this application is not configured for billing in google play.
+
+pui aceiasi versiune in google play ca pe device, astepti 2 ore si merge
+
+Daca faci alta versiune din flash develop chair daca nu schimbi nimic trebuie sa o uploadezi in google play si apoi sa astepti 2 ore inainte sa poata sa mearga IAP
+
+
+Nu merge onpurchase nu afiseaza nimic
+
+
+Updatat la openfl2.0
+
+06-12 12:04:44.690: E/IabHelper(1597): In-app billing error: Purchase signature verification FAILED for sku com.paala.100flixel4
+
+
+06-12 12:04:44.705: I/trace(1597): MenuState.hx:374: purchaseFailed - productID: com.paala.100flixel4 - message: Signature verification failed for sku com.paala.100flixel4 (response: -1003:Purchase signature verification failed)
+
+
+
+merge:
+
+incerc cu 1.2 vers 1.0.1:
+06-13 10:13:23.985: W/System.err(24012): 	at org.haxe.extension.iap.util.IabHelper.flagStartAsync(IabHelper.java:793)
+06-13 10:13:23.985: W/System.err(24012): 	at org.haxe.extension.iap.util.IabHelper.launchPurchaseFlow(IabHelper.java:358)
+06-13 10:13:23.985: W/System.err(24012): 	at org.haxe.extension.iap.util.IabHelper.launchPurchaseFlow(IabHelper.java:324)
+06-13 10:13:23.985: W/System.err(24012): 	at org.haxe.extension.iap.InAppPurchase.buy(InAppPurchase.java:30)
+
+eraoarea apare ca am apasat de 2 ori in rest ramane blocat ca prostu
+
+incerc cu 1.2 cu vers 1.0.4,
+Nu merge fara eroare nimic
+1.0.3
+nu
+1.0.2
+nu
+
+pana la urma am facut altfel query la inventory si daca il gaseste il consuma. Trebuie sa dai restart la playstate

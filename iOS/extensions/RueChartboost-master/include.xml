@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<ndll name="ruechartboost" />
+	
+	<section if="ios">
+		<dependency name= "libChartboost.a" />
+		<dependency name="QuartzCore.framework"/>
+		<dependency name="SystemConfiguration.framework" />
+		<dependency name="AdSupport.framework" />
+	</section>
+	
+	<section if="android">
+		<dependency name="ruechartboost" path="dependencies/android"/>
+		<android extension="org.haxe.extension.cb.ChartboostConnect" />
+		<template path="dependencies/android/src/org/haxe/extension/cb/util/chartboost.jar" rename="deps/ruechartboost/libs/chartboost.jar"/>
+	</section>
+</project>

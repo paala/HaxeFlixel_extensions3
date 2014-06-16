@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<include path="extensions/admob/git"/>
+	
+	<include path="extensions/HyperTouch-haxe3"/>
+	<include path="extensions/RueChartboost-master"/>
+	<include path="extensions/iap-master"/>
+	<include path="extensions/gamecenter-master"/>
+	<!--include path="extensions/HypTwitter-haxe3"/-->
+	<!--include path="extensions/HypFacebook-haxe3"/-->
+	<include path="extensions/inthebox-macros"/>
+
+<!--dependency name="extensions/HypFacebook-haxe3/ndll/iPhone/libhypfacebook.iphoneos-v7.a" /-->
+<!--ios linker-flags="-v -fobjc-arc -force_load $SRCROOT/$PRODUCT_NAME/lib/$ARCHS/libhypfacebook.iphoneos-v7.a" /-->
+
+<!--dependency name="extensions/HypFacebook-haxe3/ndll/iPhone/libhypfacebook.iphoneos.a" />
+<ios linker-flags="-v -fobjc-arc -force_load $SRCROOT/$PRODUCT_NAME/lib/$ARCHS/libhypfacebook.iphoneos.a" /-->
+
+<!--dependency name="extensions/HypFacebook-haxe3/ndll/iPhone/libhypfacebook.iphonesim.a" />
+<ios linker-flags="-v -fobjc-arc -force_load $SRCROOT/$PRODUCT_NAME/lib/$ARCHS/libhypfacebook.iphonesim.a" /-->
+
+
+	<ios linker-flags="-force_load /Users/paala/Desktop/HaxeFlixel/ProjectJumper3.2.2/extensions/admob/git/ndll/iPhone/libGoogleAdMobAds.a" />
+	<app title="Project Jumper" file="ProjectJumper" main="Main" version="0.0.1" company="HaxeFlixel" />
+	 <meta package="com.paala.testunity"/>
+	
+	
+	<window width="640" height="480" fps="60" orientation="portrait" resizable="true" if="web" />
+	<window width="640" height="480" fps="60" orientation="landscape" fullscreen="false" hardware="true" vsync="true" unless="web" />
+	
+	<!--The flixel preloader gets stuck in Chrome, so it's disabled by default for now. 
+	Safe to use if you embed the swf into a html file!-->
+	<!--<app preloader="flixel.system.FlxPreloader" />-->
+	
+	<!--The swf version should be at least 11.2 if you want to use the FLX_MOUSE_ADVANCED option-->
+	<set name="SWF_VERSION" value="11.2" />
+	
+	<set name="BUILD_DIR" value="export" />
+	<classpath name="source" />
+	
+	<assets path="assets" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="flixel"/>
+	
+	<!--In case you want to use the addons package-->
+	<!--<haxelib name="flixel-addons" />-->
+	
+	<!--In case you want to use the ui package-->
+	<!--<haxelib name="flixel-ui"/>-->
+	
+	<!--In case you want to use nape with flixel-->
+	<!--<haxelib name="nape" />-->
+	<!--Enable this for nape release builds for a serious peformance improvement-->
+	<!--<haxedef name="NAPE_RELEASE_BUILD" />--> 
+	
+	<!--Enable the flixel core recording system-->
+	<!--<haxedef name="FLX_RECORD" />-->
+	
+	<!--Enable right and middle click support for the mouse. Flash player version 11.2+, no HTML5 support -->
+	<!--<haxedef name="FLX_MOUSE_ADVANCED" />-->
+	
+	<!--Disable the Native cursor api for Flash target-->
+	<!-- <haxedef name="FLX_NO_NATIVE_CURSOR" /> -->
+	
+	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
+	<!--<haxedef name="FLX_NO_MOUSE" if="mobile" />-->
+	<!--<haxedef name="FLX_NO_KEYBOARD" if="mobile" />-->
+	<!--<haxedef name="FLX_NO_TOUCH" if="desktop" />-->
+	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
+	
+	<!--Disable the Flixel core sound tray-->
+	<!--<haxedef name="FLX_NO_SOUND_TRAY" />-->
+	
+	<!--Disable the Flixel core focus lost screen-->
+	<!--<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />-->
+	
+	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+</project>

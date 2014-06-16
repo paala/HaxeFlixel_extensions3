@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="Testchartboost" package="com.example.testchartboost" version="1.0.0" company="Company Name" />
+	<app main="Main" path="Export" file="Testchartboost" />
+	
+	<source path="Source" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="actuate" />
+	
+	<section if="android">
+		
+		<include path="../../../RueChartboost" />
+		<setenv name="ChartboostID" value="set your app ID here" />
+		<setenv name="ChartboostSignature" value="set your app Signature here" />
+	
+	</section >
+	
+	<section if="ios">
+	
+		<include path="../../../RueChartboost" />
+	
+	</section>
+	
+	
+	<assets path="Assets" rename="assets" exclude="openfl.svg" />
+	<icon path="Assets/openfl.svg" />
+	
+</project>

@@ -1,0 +1,10 @@
+.DS_Store
+ndll/*/*.a
+ndll/*/*.so
+ndll/*/*.ndll
+project/obj/*
+
+*.hxproj
+
+sample/_material/*
+sample/bin

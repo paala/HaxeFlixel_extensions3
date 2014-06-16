@@ -1,0 +1,37 @@
+     [echo] ----------
+     [echo] Handling RenderScript files...
+     [echo] ----------
+     [echo] Handling Resources...
+     [aapt] Found Deleted Target File
+     [aapt] Generating resource IDs...
+     [echo] ----------
+     [echo] Handling BuildConfig class...
+[buildconfig] Generating BuildConfig class.
+
+-pre-compile:
+
+-compile:
+    [javac] Compiling 6 source files to D:\Haxeflixel\ADMOB\1.0\Project Jumper _3.2.2\export\android\bin\bin\classes
+    [javac] D:\Haxeflixel\ADMOB\1.0\Project Jumper _3.2.2\export\android\bin\src\org\haxe\lime\GameActivity.java:162: error: cannot find symbol
+    [javac] 		Extension.packageName = getApplicationContext ().getPackageName ();
+    [javac] 		         ^
+    [javac]   symbol:   variable packageName
+    [javac]   location: class Extension
+    [javac] D:\Haxeflixel\ADMOB\1.0\Project Jumper _3.2.2\export\android\bin\src\org\haxe\lime\GameActivity.java:569: error: cannot find symbol
+    [javac] 			extension.onLowMemory ();
+    [javac] 			         ^
+    [javac]   symbol:   method onLowMemory()
+    [javac]   location: variable extension of type Extension
+    [javac] D:\Haxeflixel\ADMOB\1.0\Project Jumper _3.2.2\export\android\bin\src\org\haxe\lime\GameActivity.java:580: error: cannot find symbol
+    [javac] 			extension.onNewIntent (intent);
+    [javac] 			         ^
+    [javac]   symbol:   method onNewIntent(Intent)
+    [javac]   location: variable extension of type Extension
+    [javac] D:\Haxeflixel\ADMOB\1.0\Project Jumper _3.2.2\export\android\bin\src\org\haxe\lime\GameActivity.java:690: error: cannot find symbol
+    [javac] 			extension.onTrimMemory (level);
+    [javac] 			         ^
+    [javac]   symbol:   method onTrimMemory(int)
+    [javac]   location: variable extension of type Extension
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+    [javac] 4 errors

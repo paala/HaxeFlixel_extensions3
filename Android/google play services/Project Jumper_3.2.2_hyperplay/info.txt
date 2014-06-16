@@ -1,0 +1,3 @@
+Trebuie sa inlocuiesti in :
+C:\HaxeToolkit\haxe\openfl\lime\openfl-native\1,2,0\templates\android\template\src\org\haxe\lime
+Main activity cu cea new

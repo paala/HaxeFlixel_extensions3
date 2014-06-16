@@ -1,0 +1,122 @@
+package ::APP_PACKAGE::;
+import com.chartboost.sdk.*;
+import android.os.Bundle;
+import android.util.Log;
+import android.app.Activity;
+//din haxetoolkit
+public class MainActivity extends org.haxe.lime.GameActivity {
+private static Chartboost cb;
+private static Activity activity ;
+
+
+ 
+ @Override
+  protected void onCreate(Bundle state) {
+   Log.v("tag","chartboost_oncreate");
+        super.onCreate(state);   
+  activity=this;
+  // Configure Chartboost
+  cb = Chartboost.sharedChartboost();
+  // Log.v("tag","chartboost_dupasharescharboost");
+  String appId = "4f7b433509b6025804000002";
+		String appSignature = "dd2d41b69ac01b80f443f5b6cf06096d457f82bd";
+  cb.onCreate(activity, appId, appSignature, null);
+ 
+  // Notify the beginning of a user session
+  cb.startSession();
+ ///Log.v("tag","chartboost_dupastartsession");
+  // Show an interstitial
+  cb.cacheInterstitial();
+  cb.cacheMoreApps();
+  //cb.showInterstitial();
+  //cb.showMoreApps();
+ //Log.v("tag","chartboost_inters");
+ 
+ 
+    }
+	
+ @Override
+ protected void onStart() {
+  super.onStart();
+Log.v("tag","chartboost_onstart");
+  cb.onStart(activity);
+ 
+ }
+
+ @Override
+ protected void onStop() {
+  super.onStop();
+Log.v("tag","chartboost_onstop");
+  cb.onStop(activity);
+  
+ }
+
+ @Override
+ protected void onDestroy() {
+  super.onDestroy();
+Log.v("tag","chartboost_ondestroy");
+  cb.onDestroy(activity);
+ 
+ }
+
+ @Override
+ public void onBackPressed() {
+
+  // If an interstitial is on screen, close it. Otherwise continue as normal.
+  if (cb.onBackPressed())
+   return;
+  else
+   super.onBackPressed();
+ }
+ //@Override
+public static  void didDismissInterstitial(String location) {
+Log.v("tag","chartboost_dismiss");
+    cb.cacheInterstitial(location);
+	//cb.onStop(activity);
+	
+}
+
+ public static  void showMA(){
+ 
+ Log.v("tag","chartboost_MA");
+ 
+ cb.showMoreApps();
+ cb.cacheMoreApps();
+ 
+ Log.v("tag","chartboost_DUPASHOW");
+ }
+ public static  void showChartboost(){
+ 
+ Log.v("tag","chartboost_METHOD");
+ 
+ cb.showInterstitial();
+ 
+ //cb.onStart(this);
+ cb.startSession();
+  cb.cacheInterstitial();
+  
+  //
+ 
+ Log.v("tag","chartboost_DUPASHOW");
+ }
+ public static void showChartboost3(){
+ //cb.startSession();
+ //cb.cacheInterstitial();
+ 
+ //cb = Chartboost.sharedChartboost();
+  // Log.v("tag","chartboost_dupasharescharboost");
+  //String appId = "4f7b433509b6025804000002";
+		//String appSignature = "dd2d41b69ac01b80f443f5b6cf06096d457f82bd";
+  //cb.onCreate(activity, "4f7b433509b6025804000002","dd2d41b69ac01b80f443f5b6cf06096d457f82bd", null);
+ //cb.onStart(activity);
+  // Notify the beginning of a user session
+  didDismissInterstitial("here");
+  cb.startSession();
+ ///Log.v("tag","chartboost_dupastartsession");
+  // Show an interstitial
+  cb.cacheInterstitial();
+  cb.cacheMoreApps();
+ }
+ 
+}
+

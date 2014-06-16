@@ -1,0 +1,1 @@
+C:\HaxeToolkit\haxe\openfl\lime\openfl-native\1,2,0\templates\android

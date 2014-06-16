@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<world>
+	<background img="img/BG.png"></background>
+	<UI statusBarBgURI="img/statusBarBG.png" ></UI>
+	<startingConditions gold="1500" level="1"></startingConditions>
+	<elements resComSkins="houseGreen_1,houseWhite_1,store_1">
+		<base img="img/base.png"></base>
+		<baseLarge img="img/baseLarge.png"></baseLarge>
+		<barracks_1 img="img/barracks_1.png"></barracks_1>
+		<mill_1 img="img/mill_1.png"></mill_1>
+		<court_1 img="img/court_1.png" buyPrice="10000" upgradePriceMultiplier="1.2"></court_1>
+		<fountain_1 img="img/fountain_1.png"></fountain_1>
+		<houseGreen_1 img="img/houseGreen_1.png" buyPrice="100" upgradePriceMultiplier="1.2"></houseGreen_1>
+		<houseWhite_1 img="img/houseWhite_1.png" buyPrice="100" upgradePriceMultiplier="1.2"></houseWhite_1>
+		<store_1 img="img/store_1.png" buyPrice="100" upgradePriceMultiplier="1.2"></store_1>
+	</elements>
+	<map>
+		<slot id="court" type="gov" x="412" y="194"></slot>
+		<slot id="mill" type="fixed" x="158" y="88" defSkin="mill_1"></slot>
+		<slot id="tower" type="fixed" x="246" y="208" defSkin="barracks_1"></slot>
+		<slot id="fountain" type="fixed" x="420" y="398" defSkin="fountain_1"></slot>
+		<slot id="resCom1" type="res_com" x="280" y="424"></slot>
+		<slot id="resCom2" type="res_com" x="520" y="460"></slot>
+		<slot id="resCom3" type="res_com" x="484" y="526"></slot>
+		<slot id="resCom4" type="res_com" x="574" y="532"></slot>
+	</map>
+	<storeItems order="gold_x_1k,gold_x_5k,gold_x_10k,unlock_level2,testsubs">
+		<gold_x_1k id="gold_x_1k" thumb="img/item_gold_1.png" title="Gold x1K" price="0.99" reward="1000"></gold_x_1k>
+		<gold_x_5k id="gold_x_5k" thumb="img/item_gold_2.png" title="Gold x5K" price="1.99" reward="5000"></gold_x_5k>
+		<gold_x_10k id="gold_x_10k" thumb="img/item_gold_3.png" title="Gold x10K" price="2.99" reward="10000"></gold_x_10k>
+		<unlock_level2 id="unlock_level2" thumb="img/item_unlockLvl2.png" title="Unlock level 2" price="1.99"></unlock_level2>
+		<testsubs id="testsubs" thumb="img/item_unlockLvl2.png" title="testsubs" price="1.99"></testsubs>
+	</storeItems>
+</world>

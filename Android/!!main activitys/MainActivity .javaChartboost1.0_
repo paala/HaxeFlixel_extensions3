@@ -1,0 +1,93 @@
+package ::APP_PACKAGE::;
+import org.haxe.extension.Extension;
+import android.os.Bundle;
+import com.chartboost.sdk.*;
+
+public class MainActivity extends org.haxe.nme.GameActivity {
+ private Chartboost cb;
+ 
+ @Override
+  protected void onCreate(Bundle state) {
+        super.onCreate(state);   
+  
+  // Configure Chartboost
+  this.cb = Chartboost.sharedChartboost();
+  String appId = "4f7b433509b6025804000002";
+  String appSignature = "dd2d41b69ac01b80f443f5b6cf06096d457f82bd";
+  this.cb.onCreate(this, appId, appSignature, null);
+ 
+  // Notify the beginning of a user session
+  this.cb.startSession();
+
+  // Show an interstitial
+  //this.cb.showInterstitial();
+  //this.cb.cacheInterstitial();
+
+    }
+ 
+ @Override
+ protected void onStart() {
+  super.onStart();
+
+  this.cb.onStart(this);
+ }
+
+ @Override
+ protected void onStop() {
+  super.onStop();
+
+  this.cb.onStop(this);
+ }
+
+ @Override
+ protected void onDestroy() {
+  super.onDestroy();
+
+  this.cb.onDestroy(this);
+ }
+
+ @Override
+ public void onBackPressed() {
+
+  // If an interstitial is on screen, close it. Otherwise continue as normal.
+  if (this.cb.onBackPressed())
+   return;
+  else
+   super.onBackPressed();
+ }
+}
+
+ public static  void showMA(){
+ 
+ Log.v("tag","chartboost_MA");
+ 
+ //cb.showMoreApps();
+ //cb.cacheMoreApps();
+ 
+ Log.v("tag","chartboost_DUPASHOW");
+ }
+ public static  void showChartboost(){
+ 
+ Log.v("tag","chartboost_METHOD");
+ 
+ MainActivity instance = (MainActivity) Extension.mainActivity;
+        instance.cb.showInterstitial();
+		//instance.cb.clearCache();
+		//instance.cb.cacheInterstitial();
+ 
+ //cb.onStart(this);
+ 
+  
+  //
+ 
+ Log.v("tag","chartboost_DUPASHOW");
+ }
+ public static void showChartboost3(){
+ //cb.startSession();
+ //cb.cacheInterstitial();
+ 
+ //cb.onStart(activity );
+ }
+ 
+}
+
