@@ -46,6 +46,8 @@ INFO:
 
 1. To install the enviroment to work with these extensions you need to rename your c:Haxetoolkit to haxe_3.1.3
 then install haxe3.0.1 and all this libraries:
+
+
 C:\Users\mihai.morosanu>haxelib list
 actuate: [1.7.3]
 flixel: [3.2.2]
