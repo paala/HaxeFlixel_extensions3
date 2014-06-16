@@ -44,7 +44,7 @@ with the ones provided in !!main activitys folder
 
 INFO:
 
-1. To install the enviroment to work with these extensions you need to rename your c:Haxetoolkit to haxe_3.1.3
+ To install the enviroment to work with these extensions you need to rename your c:Haxetoolkit to haxe_3.1.3
 then install haxe3.0.1 and all this libraries:
 
 
@@ -61,6 +61,7 @@ lime: [0.9.4] 0.9.9
 lime-tools: [1.2.3] 1.5.3
 openfl: 1.1.0 [1.2.0]
 openfl-native: [1.2.0]
+
 
 Known issues:
 
