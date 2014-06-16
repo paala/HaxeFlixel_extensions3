@@ -13,7 +13,7 @@ https://github.com/openfl/openfl-native/issues/216
 Extensions used:
 
 1. Admob:                     https://github.com/mkorman9/admob-openfl
-2.Chartboost                   http://fugocode.blogspot.ro/2013/04/integrating-chartboost-with-haxe-nme.html
+2. Chartboost                   http://fugocode.blogspot.ro/2013/04/integrating-chartboost-with-haxe-nme.html
 3. Google Play services:       https://github.com/hyperfiction/HypPlay_services
 4. Facebook                     https://github.com/hyperfiction/HypFacebook
 5. Gestures:                    https://github.com/shoebox/HyperTouch
@@ -22,8 +22,8 @@ Extensions used:
 
 My wish list but unable to find or implement:
 8. Twitter
-9.PushWoosh(or other good push notification service)
-10.Cloudsave 
+9. PushWoosh(or other good push notification service)
+10. Cloudsave 
 
 
 In iOS you can easy make a project that contains all extensions. This is how the demo is here but with some code commented out
